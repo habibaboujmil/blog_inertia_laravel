@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use Carbon\Carbon;
+class ThemesTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('themes')->insert(
+            ['name' => 'Fashion', 
+             'created_at' => Carbon::now(),
+            ]);
+        DB::table('themes')->insert(
+            ['name' => 'Make Up', 
+                'created_at' => Carbon::now(),
+            ]);
+        DB::table('themes')->insert(
+            ['name' => 'Hair Style', 
+                'created_at' => Carbon::now(),
+            ]);
+    }
+    
+}
