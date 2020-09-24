@@ -5,6 +5,9 @@
     </div>
         <v-form
         ref="form"
+        enctype="multipart/form-data"
+        id="article"
+        name="article"
         >
             <v-card
             width="90%"
@@ -17,6 +20,7 @@
                     v-model= "form.theme"
                     :items="themes"
                     :label="`Theme`"
+                    name="theme"
                     ></v-autocomplete>
                 </v-list-item-title>
             </v-list-item-content>
@@ -41,6 +45,7 @@
                     v-model= "form.image"
                     label="choose photo"
                     accept="image/png, image/jpeg, image/bmp"
+                    name="image"
                     right
                 >
                 </v-file-input>
@@ -81,20 +86,24 @@
     components:{
      toolbar: ()  => import('./layouts/toolbar'),
   } ,
-    data: () => ({
-
-        form: { 
-            title:null,
-            content:null,
-            image: null,
-            theme:null,
-        },
-  }),
+   
+   data () {
+    return {
+       form: { 
+                title:null,
+                content:null,
+                image: null,
+                theme:null,
+            },
+    }},
+    
       props:['themes'],
 
       methods: {
         submit() {
-            this.$inertia.post(this.route('store'), this.form)  
+            const formElement = document.getElementById('article')
+            const formData = new FormData(formElement);
+            this.$inertia.post(this.route('store'), formData);
             },
         }
   }

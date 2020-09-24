@@ -25,13 +25,15 @@ class ArticlesController extends Controller
 
     public function index(Request $request)
     {
-        $theme_id=$request->input('theme_id');
+        $title=$request->input('title');
+        // return $title;
         $user_id = Auth::user()->id;
         $articles = article::with('theme:id,name','author:id,name')->where('author_id',$user_id)
-                    ->when($theme_id != '', function ($query) use ($theme_id) {
-                        $query->where('theme_id',$theme_id);})
-                    ->orderBy('created_at')->paginate(10);
+                    ->when($title != '', function ($query) use ($title) {
+                        $query->where('title',  'like', '%' . $title.'%');})
+                    ->orderBy('id','desc')->paginate(10);
         $themes = theme::pluck('name');
+        // return $articles;
         return Inertia::render('admin/index',
                 ['articles'=>$articles, 'themes'=>$themes]);
     }
@@ -44,6 +46,7 @@ class ArticlesController extends Controller
 
     public function store(Request $request)
     {
+        // return dd($request->file('image'));
         $theme_id=theme::where('name',$request->input('theme'))->value('id');
         $user_id = Auth::user()->id;
         $article= new article();
@@ -55,7 +58,7 @@ class ArticlesController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('image', 'public');
             $fileUrl = Storage::url($path);
-            $article->image_url = $fileUrl;
+            $article->img_url = $fileUrl;
         }
         $article->save();
         return redirect()->route('list');
@@ -74,6 +77,7 @@ class ArticlesController extends Controller
 
     public function update(Request $request,$id)
     {
+        // return $request->all();
         $article=article::find($id);
         $article->title = $request->input('title');
         $article->content = $request->input('content');

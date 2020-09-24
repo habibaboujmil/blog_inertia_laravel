@@ -1,23 +1,20 @@
 <template>
-    <v-autocomplete
-          v-model="model"
-          :items="themes"
-          :label="`search with theme`"
-          prepend-icon="mdi-search"
-        >
-          <template v-slot:append-outer>
-            <v-slide-x-reverse-transition
-              mode="out-in"
-            >
-              <v-icon
-                :key="`icon-${searching}`"
-                :color="searching ? 'success' : 'info'"
-                @click="searching = !searching"
-                v-text="searching ? 'mdi-check-outline' : 'mdi-circle-edit-outline'"
-              ></v-icon>
-            </v-slide-x-reverse-transition>
-          </template>
-        </v-autocomplete>
+  <v-row>
+    <v-text-field label="Search with Title"
+        v-model= "title"
+        name="title"
+        type="text" >
+      </v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn
+          text
+          color="deep-purple accent-4"
+          @click="submit"
+          >
+          Search
+      </v-btn>
+ </v-row>   
+                
 </template>
 
 <script>
@@ -25,11 +22,15 @@ export default {
     name: 'filtre',
     data () {
     return {
-      searching: false,
-      model: null,
+      title:null,
       }
     },
-    props:['themes']
+     methods: {
+        
+        search(){
+            this.$inertia.visit(this.route('list', this.form))
+        }
+        }
 }
  
 </script>

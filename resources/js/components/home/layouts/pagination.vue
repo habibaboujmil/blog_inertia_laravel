@@ -6,6 +6,7 @@
                 v-model="page"
                 class="my-4"
                 :length=articles.last_page
+                @click= "paginate"
             ></v-pagination>
             </v-container>
         </v-col>
@@ -15,8 +16,17 @@
 export default {
     data () {
     return {
-      page: 1,
+      
+          page:1
+        
     }},
     props:['articles'],
+
+    methods(){
+        paginate()
+        {
+            this.$inertia.visit(this.route('list', this.page))
+        }
+    }
 }
 </script>

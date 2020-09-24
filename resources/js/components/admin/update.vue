@@ -5,6 +5,9 @@
     </div>
         <v-form
         ref="form"
+        enctype="multipart/form-data"
+        name="article"
+        id="article"
         >
             <v-card
             width="90%"
@@ -85,9 +88,6 @@
      toolbar: ()  => import('./layouts/toolbar'),
   } ,
     data: () => ({
-        rules: [
-            value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
-        ],
         form: { 
             title:null,
             content:null,

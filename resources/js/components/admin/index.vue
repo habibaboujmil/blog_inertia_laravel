@@ -2,15 +2,32 @@
     <v-app id="inspire">
         <div>
             <toolbar/>
-            <!-- <filtre :themes='themes'></filtre> -->
+            
+        </div>
+        <div style="float: right">
+            
         </div>
         <v-card  class="mx-auto"  max-width="90%"  style="margin-bottom:20px" >
                 <v-container fluid>
                     
                     <v-row class="my-2" style="margin:20px">
-                        <v-btn small color="deep-purple accent-4" dark
-                         @click="add"
-                         >Add Article</v-btn>
+                            <v-text-field label="Search"
+                                v-model= "filtre.title"
+                                placeholder="Title"
+                                outlined
+                                append-icon= "search"
+                                @click:append = "search"
+                                >
+                            </v-text-field>
+                            <v-spacer></v-spacer>
+                            <v-btn  color="deep-purple accent-4" dark
+                                large
+                                @click="add"
+                                >Add Article
+                            </v-btn>
+                        
+                    </v-row >
+                    <v-row class="my-2" style="margin:20px">
                     </v-row>
                     <v-row dense>
                         <v-col
@@ -79,7 +96,11 @@
     
    data () {
     return {
-      page: 2,
+      page:null,
+      filtre:{
+          title:'',
+      }
+      
     }},
       props:['articles','themes'],
       methods: {
@@ -95,6 +116,10 @@
         show(id) {
             this.$inertia.visit(this.route('details', id))
           },
+        
+        search(){
+            this.$inertia.visit(this.route('list', this.filtre))
+        }
           
   }
   }

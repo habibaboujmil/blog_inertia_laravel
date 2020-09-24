@@ -45,7 +45,7 @@
             </v-list-item>
   
             <v-list-item>
-              <InertiaLink :href="route('home')">
+              <InertiaLink :href="route('logout')" method ="post">
                 Log out
               </InertiaLink>
             </v-list-item>
